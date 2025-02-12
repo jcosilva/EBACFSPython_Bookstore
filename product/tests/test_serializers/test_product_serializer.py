@@ -21,6 +21,7 @@ class TestProductSerializer(TestCase):
         serializer = ProductSerializer(instance=self.product)
         
         expected_data = {
+            'id': self.product.id,
             'title': self.product.title,
             'description': self.product.description,
             'price': self.product.price,
@@ -38,6 +39,7 @@ class TestProductSerializer(TestCase):
         serializer = ProductSerializer(instance=self.product)
         
         expected_data = {
+            'id': self.product.id,
             'title': self.product.title,
             'description': self.product.description,
             'price': float(self.product.price),
