@@ -22,8 +22,8 @@ class TestOrderSerializer(TestCase):
 
         expected_data = {
             "product": [
-                {"title": self.product1.title, "description": self.product1.description, "price": float(self.product1.price), "active": self.product1.active, "category": []},
-                {"title": self.product2.title, "description": self.product2.description, "price": float(self.product2.price), "active": self.product2.active, "category": []},
+                {"id": self.product1.id, "title": self.product1.title, "description": self.product1.description, "price": float(self.product1.price), "active": self.product1.active, "category": []},
+                {"id": self.product2.id, "title": self.product2.title, "description": self.product2.description, "price": float(self.product2.price), "active": self.product2.active, "category": []},
             ],
             "total": float(self.product1.price + self.product2.price),
             "user": self.user.id,
@@ -49,7 +49,6 @@ class TestOrderSerializer(TestCase):
         self.assertEqual(set(order.product.all()), {self.product1, self.product2})
 
     def test_order_serializer_invalid_data(self):
-        """Testa se o serializer rejeita uma lista vazia de produtos"""
         data = {
             "product_id": [],
             "user": self.user.id,
