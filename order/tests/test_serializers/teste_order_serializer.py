@@ -13,7 +13,7 @@ class TestOrderSerializer(TestCase):
         self.user = UserFactory()
         self.product1 = ProductFactory(title="Mouse Gamer", price=200.00)
         self.product2 = ProductFactory(title="Teclado Mecânico", price=350.00)
-        
+
         self.order = OrderFactory(user=self.user)
         self.order.product.add(self.product1, self.product2)
 
@@ -22,15 +22,31 @@ class TestOrderSerializer(TestCase):
 
         expected_data = {
             "product": [
-                {"id": self.product1.id, "title": self.product1.title, "description": self.product1.description, "price": float(self.product1.price), "active": self.product1.active, "category": []},
-                {"id": self.product2.id, "title": self.product2.title, "description": self.product2.description, "price": float(self.product2.price), "active": self.product2.active, "category": []},
+                {
+                    "id": self.product1.id,
+                    "title": self.product1.title,
+                    "description": self.product1.description,
+                    "price": float(self.product1.price),
+                    "active": self.product1.active,
+                    "category": [],
+                },
+                {
+                    "id": self.product2.id,
+                    "title": self.product2.title,
+                    "description": self.product2.description,
+                    "price": float(self.product2.price),
+                    "active": self.product2.active,
+                    "category": [],
+                },
             ],
             "total": float(self.product1.price + self.product2.price),
             "user": self.user.id,
         }
 
         serializer_data = serializer.data
-        serializer_data["total"] = float(serializer_data["total"])  # Garantir que total seja float
+        serializer_data["total"] = float(
+            serializer_data["total"]
+        )  # Garantir que total seja float
 
         self.assertEqual(serializer_data, expected_data)
 
@@ -56,6 +72,6 @@ class TestOrderSerializer(TestCase):
 
         serializer = OrderSerializer(data=data)
         is_valid = serializer.is_valid()
-        
+
         self.assertFalse(is_valid)
         self.assertIn("product_id", serializer.errors)

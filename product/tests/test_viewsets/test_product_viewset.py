@@ -2,61 +2,59 @@ import json
 
 from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
-#from rest_framework.authtoken.models import Token
+
+# from rest_framework.authtoken.models import Token
 from django.urls import reverse
 from product.factories import CategoryFactory, ProductFactory
 from order.factories import UserFactory
 from product.models import Product
+
 
 class TestProductViewSet(APITestCase):
     client = APIClient()
 
     def setUp(self):
         self.user = UserFactory()
-#        token = Token.objects.create(user=self.user)
-#        token.save()
-        self.category = CategoryFactory(title='books')
+        #        token = Token.objects.create(user=self.user)
+        #        token.save()
+        self.category = CategoryFactory(title="books")
 
         self.product = ProductFactory(
-            title='pro controller',
-            price=200.00,
-            category=[self.category]
+            title="pro controller", price=200.00, category=[self.category]
         )
-    
+
     def test_get_all_product(self):
-#        token = Token.objects.get(user__username=self.user.username)
-#        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-        response = self.client.get(
-            reverse('product-list', kwargs={'version': 'v1'})
-        )
+        #        token = Token.objects.get(user__username=self.user.username)
+        #        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.get(reverse("product-list", kwargs={"version": "v1"}))
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         product_data = json.loads(response.content)
 
-        self.assertEqual(product_data['results'][0]['title'], self.product.title)
-        self.assertEqual(product_data['results'][0]['price'], self.product.price)
-        self.assertEqual(product_data['results'][0]['active'], self.category.active),
-        self.assertEqual(product_data['results'][0]['category'][0]['title'], self.category.title)
-    
+        self.assertEqual(product_data["results"][0]["title"], self.product.title)
+        self.assertEqual(product_data["results"][0]["price"], self.product.price)
+        self.assertEqual(product_data["results"][0]["active"], self.category.active),
+        self.assertEqual(
+            product_data["results"][0]["category"][0]["title"], self.category.title
+        )
+
     def test_create_product(self):
-#        token = Token.objects.get(user__username=self.user.username)
-#        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        #        token = Token.objects.get(user__username=self.user.username)
+        #        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         category = CategoryFactory()
-        data = json.dumps({
-            'title': 'notebook',
-            'price': 800.00,
-            'categories_id': [category.id]
-        })
+        data = json.dumps(
+            {"title": "notebook", "price": 800.00, "categories_id": [category.id]}
+        )
 
         response = self.client.post(
-            reverse('product-list', kwargs={'version': 'v1'}),
+            reverse("product-list", kwargs={"version": "v1"}),
             data=data,
-            content_type='application/json'
+            content_type="application/json",
         )
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-        created_product = Product.objects.get(title='notebook')
+        created_product = Product.objects.get(title="notebook")
 
-        self.assertEqual(created_product.title, 'notebook')
+        self.assertEqual(created_product.title, "notebook")
         self.assertEqual(created_product.price, 800.00)
