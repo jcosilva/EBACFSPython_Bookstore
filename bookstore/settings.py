@@ -16,7 +16,7 @@ from dotenv import load_dotenv ###
 from pathlib import Path
 
 # Caminho para o seu arquivo 'env.dev'
-env_file = Path(__file__).resolve().parent / 'env.dev' ###
+env_file = Path(__file__).resolve().parent.parent / 'env.dev' ###
 print(env_file)
 
 # Carrega as variáveis do arquivo 'env.dev'
