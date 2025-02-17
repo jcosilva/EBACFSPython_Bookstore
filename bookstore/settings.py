@@ -17,6 +17,7 @@ from pathlib import Path
 
 # Caminho para o seu arquivo 'env.dev'
 env_file = Path(__file__).resolve().parent / 'env.dev' ###
+print(env_file)
 
 # Carrega as variáveis do arquivo 'env.dev'
 load_dotenv(dotenv_path=env_file)
@@ -31,6 +32,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECRET_KEY = "django-insecure-t_f*bbrzroemea$y(jgq+1ca0$y!pdrp0j^tbk0of$s!0vt_wd"
 # SECRET_KEY = os.environ.get("SECRET_KEY")
 SECRET_KEY = os.getenv('SECRET_KEY') ###
+print(SECRET_KEY)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
