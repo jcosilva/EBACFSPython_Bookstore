@@ -11,17 +11,18 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 import os
-import environ ###
 
+from dotenv import load_dotenv ###
 from pathlib import Path
 
-env = environ.Env() ###
+# Caminho para o seu arquivo 'env.dev'
+env_file = Path(__file__).resolve().parent / 'env.dev' ###
+
+# Carrega as variáveis do arquivo 'env.dev'
+load_dotenv(dotenv_path=env_file)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Carregando variáveis de ambiente do arquivo 'env.dev' ###
-environ.Env.read_env(os.path.join(BASE_DIR, 'env.dev'))  ### Ajuste para o caminho correto
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -29,18 +30,17 @@ environ.Env.read_env(os.path.join(BASE_DIR, 'env.dev'))  ### Ajuste para o camin
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = "django-insecure-t_f*bbrzroemea$y(jgq+1ca0$y!pdrp0j^tbk0of$s!0vt_wd"
 # SECRET_KEY = os.environ.get("SECRET_KEY")
-SECRET_KEY = env.str('SECRET_KEY', default='foo') ###
+SECRET_KEY = os.getenv('SECRET_KEY') ###
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 # DEBUG = int(os.environ.get("DEBUG", default=0))
-DEBUG = env.int('DEBUG', default=1) ###
+DEBUG = int(os.getenev('DEBUG', default=0)) ###
 
 # ALLOWED_HOSTS = ["*"]
 # ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 # ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost 127.0.0.1 [::1]").split(" ")
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=["localhost", "127.0.0.1", "[::1]"]) ###
-
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', default=["localhost", "127.0.0.1", "[::1]"]).split(" ") ###
 
 # Application definition
 
