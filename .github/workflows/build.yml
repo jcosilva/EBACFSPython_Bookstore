@@ -1,7 +1,6 @@
 name: Python application
 
-on:
-  push:
+on: [push]
 
 jobs:
   build:
@@ -49,8 +48,9 @@ jobs:
         run: poetry --help
 
       - name: Install dependencies
-        run: poetry install
+        shell: bash
+        run: python -m poetry install
     
-      - name: Run tests
+      - name: Test
         run: |
           poetry run python manage.py test
