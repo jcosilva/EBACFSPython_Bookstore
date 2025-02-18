@@ -1,22 +1,7 @@
 name: Python application
 
-on: 
+on:
   push:
-
-services:
-  postgres:
-    image: postgres:13
-    ports:
-      - 5433:5432  # Mapeia a porta 5432 do contêiner para a porta 5433 no host
-    env:
-      POSTGRES_USER: bookstore_dev
-      POSTGRES_PASSWORD: bookstore_dev
-      POSTGRES_DB: bookstore_dev_db
-    options: >-
-      --health-cmd="pg_isready -U postgres"
-      --health-timeout=5s
-      --health-interval=10s
-      --health-retries=5
 
 jobs:
   build:
@@ -27,6 +12,21 @@ jobs:
         poetry-version: [2.0.1]
     
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:13
+        ports:
+          - 5433:5432  # Mapeia a porta 5432 do contêiner para a porta 5433 no host
+        env:
+          POSTGRES_USER: bookstore_dev
+          POSTGRES_PASSWORD: bookstore_dev
+          POSTGRES_DB: bookstore_dev_db
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-timeout=5s
+          --health-interval=10s
+          --health-retries=5
 
     steps:
       - uses: actions/checkout@v4
