@@ -38,7 +38,7 @@ DEBUG = int(os.environ.get("DEBUG", default=1))
 ## env_hosts = os.environ.get("DJANGO_ALLOWED_HOSTS", "").split() # Obtém os hosts do ambiente e separa por espaço
 ## ALLOWED_HOSTS = default_hosts + env_hosts + custom_hosts # Junta os hosts padrão, os do ambiente e os customizados
 ## ALLOWED_HOSTS = [host for host in ALLOWED_HOSTS if host] # Remove valores vazios (caso a variável de ambiente esteja vazia)
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'jcosilva.pythonanywhere.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', 'jcosilva.pythonanywhere.com']
 
 # Application definition
 
@@ -73,7 +73,7 @@ ROOT_URLCONF = "bookstore.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, "bookstore", "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
