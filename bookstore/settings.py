@@ -28,16 +28,17 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
-DEBUG = int(os.environ.get("DEBUG", default=0))
+DEBUG = int(os.environ.get("DEBUG", default=1))
 
 # ALLOWED_HOSTS = ["*"]
 # ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 # ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost 127.0.0.1 [::1]").split(" ")
-default_hosts = ["localhost", "127.0.0.1", "[::1]"]
-custom_hosts = ["jcosilva.pythonanywhere.com"]
-env_hosts = os.environ.get("DJANGO_ALLOWED_HOSTS", "").split() # Obtém os hosts do ambiente e separa por espaço
-ALLOWED_HOSTS = default_hosts + env_hosts + custom_hosts # Junta os hosts padrão, os do ambiente e os customizados
-ALLOWED_HOSTS = [host for host in ALLOWED_HOSTS if host] # Remove valores vazios (caso a variável de ambiente esteja vazia)
+## default_hosts = ["localhost", "127.0.0.1", "[::1]"]
+## custom_hosts = ["jcosilva.pythonanywhere.com"]
+## env_hosts = os.environ.get("DJANGO_ALLOWED_HOSTS", "").split() # Obtém os hosts do ambiente e separa por espaço
+## ALLOWED_HOSTS = default_hosts + env_hosts + custom_hosts # Junta os hosts padrão, os do ambiente e os customizados
+## ALLOWED_HOSTS = [host for host in ALLOWED_HOSTS if host] # Remove valores vazios (caso a variável de ambiente esteja vazia)
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'jcosilva.pythonanywhere.com']
 
 # Application definition
 
