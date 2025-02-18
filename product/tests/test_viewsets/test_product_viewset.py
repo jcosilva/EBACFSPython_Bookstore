@@ -2,7 +2,6 @@ import json
 
 from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
-
 # from rest_framework.authtoken.models import Token
 from django.urls import reverse
 from product.factories import CategoryFactory, ProductFactory
@@ -15,8 +14,8 @@ class TestProductViewSet(APITestCase):
 
     def setUp(self):
         self.user = UserFactory()
-        #        token = Token.objects.create(user=self.user)
-        #        token.save()
+        # token = Token.objects.create(user=self.user)
+        # token.save()
         self.category = CategoryFactory(title="books")
 
         self.product = ProductFactory(
@@ -24,8 +23,8 @@ class TestProductViewSet(APITestCase):
         )
 
     def test_get_all_product(self):
-        #        token = Token.objects.get(user__username=self.user.username)
-        #        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        # token = Token.objects.get(user__username=self.user.username)
+        # self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         response = self.client.get(reverse("product-list", kwargs={"version": "v1"}))
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -39,8 +38,8 @@ class TestProductViewSet(APITestCase):
         )
 
     def test_create_product(self):
-        #        token = Token.objects.get(user__username=self.user.username)
-        #        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        # token = Token.objects.get(user__username=self.user.username)
+        # self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         category = CategoryFactory()
         data = json.dumps(
             {"title": "notebook", "price": 800.00, "categories_id": [category.id]}
