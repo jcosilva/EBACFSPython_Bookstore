@@ -1,21 +1,22 @@
 name: Python application
 
-on: [push]
+on: 
+  push:
 
-    services:
-      postgres:
-        image: postgres:13
-        ports:
-          - 5433:5432  # Mapeia a porta 5432 do contêiner para a porta 5433 no host
-        env:
-          POSTGRES_USER: bookstore_dev
-          POSTGRES_PASSWORD: bookstore_dev
-          POSTGRES_DB: bookstore_dev_db
-        options: >-
-          --health-cmd="pg_isready -U postgres"
-          --health-timeout=5s
-          --health-interval=10s
-          --health-retries=5
+services:
+  postgres:
+    image: postgres:13
+    ports:
+      - 5433:5432  # Mapeia a porta 5432 do contêiner para a porta 5433 no host
+    env:
+      POSTGRES_USER: bookstore_dev
+      POSTGRES_PASSWORD: bookstore_dev
+      POSTGRES_DB: bookstore_dev_db
+    options: >-
+      --health-cmd="pg_isready -U postgres"
+      --health-timeout=5s
+      --health-interval=10s
+      --health-retries=5
 
 jobs:
   build:
@@ -28,29 +29,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
     
-    - name: Install poetry ${{ matrix.poetry-version }}
-      run: |
-        python -m ensurepip
-        python -m pip install --upgrade pip
-        python -m pip install poetry==${{ matrix.poetry-version }}
+      - name: Install poetry ${{ matrix.poetry-version }}
+        run: |
+          python -m ensurepip
+          python -m pip install --upgrade pip
+          python -m pip install poetry==${{ matrix.poetry-version }}
     
-    - name: Check poetry version
-      run: poetry --version
+      - name: Check poetry version
+        run: poetry --version
     
-    - name: View poetry --help
-      run: poetry --help
+      - name: View poetry --help
+        run: poetry --help
 
-    - name: Install dependencies
-      shell: bash
-      run: python -m poetry install
+      - name: Install dependencies
+        run: poetry install
     
-    - name: Test
-      run: |
-        poetry run python manage.py test
+      - name: Run tests
+        run: |
+          poetry run python manage.py test
